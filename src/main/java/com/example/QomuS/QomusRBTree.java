@@ -64,7 +64,7 @@ public class QomusRBTree {
         }
     }
 
-    // --- Rotasi & FixUp (Singkatnya sama seperti sebelumnya) ---
+    // --- Rotasi & FixUp
     private void fixInsert(QomusRBnode k) {
         QomusRBnode u;
         while (k.parent.isRed) {

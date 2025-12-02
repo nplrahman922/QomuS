@@ -11,27 +11,32 @@ public class GimmickRegist {
 
     public void daftarkanGimmickKe(QomusRBTree tree) {
 
-        // 1. Gimmick JAM (Kirim format CLOCK:HH:mm:ss)
+       // 1. fitur jam
         Supplier<Object> fungsiJam = () -> {
             String waktu = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
-            return "CLOCK:" + waktu; // Contoh: "CLOCK:14:05:30"
+            return "CLOCK:" + waktu;
         };
-        tree.insert("jam", "Waktu Server", fungsiJam);
+        tree.insert("jam", "السَّاعَةُ (As-Sa'ah)", fungsiJam);
 
-        // 2. Gimmick DADU (Kirim format DICE:Angka)
+        // 2. fitur DADU
         Supplier<Object> fungsiDadu = () -> {
             int angka = new Random().nextInt(6) + 1;
-            return "DICE:" + angka; // Contoh: "DICE:5"
+            return "DICE:" + angka;
         };
-        tree.insert("dadu", "Lempar Dadu", fungsiDadu);
+        tree.insert("dadu", "رَمْيُ النَّرْدِ (Lempar Dadu)", fungsiDadu);
 
-        // ... kode kalkulator & diskon biarkan tetap sama ...
+        // 3. fitur kalkulator
         Supplier<Object> fungsiKalkulator = () -> "CALC:TRUE";
         tree.insert("kalkulator", "آلَةٌ حَاسِبَةٌ (Alat Hitung)", fungsiKalkulator);
 
+        // 4. fitue diskon
         Supplier<Object> fungsiDiskon = () -> {
             int jam = LocalTime.now().getHour();
-            return (jam < 12) ? "Selamat Pagi#ALERT:Diskon 50%!" : "Selamat Siang#ALERT:Maaf habis.";
+            if (jam < 12) {
+                return "ALERT:Selamat Pagi! Diskon Pagi 50%!";
+            } else {
+                return "ALERT:Selamat Siang. Maaf diskon habis.";
+            }
         };
         tree.insert("diskon", "Cek Promo", fungsiDiskon);
     }

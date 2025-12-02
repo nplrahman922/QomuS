@@ -1,16 +1,17 @@
 <script setup>
   import { ref } from 'vue'
   import CalculatorArab from './components/kalkulator.vue'
-  import JamArab from './components/JamArab.vue'     // Import Jam
-  import DaduArab from './components/DaduArab.vue'   // Import Dadu
+  import JamArab from './components/JamArab.vue'
+  import DaduArab from './components/DaduArab.vue'
+  import Icon from './components/Icon.svg'
 
   const inputKata = ref('')
   const hasilTerjemahan = ref('')
   const bgClass = ref('bg-gray-50 text-gray-900')
 
   // --- STATE UNTUK GIMMICK ---
-  const activeGimmick = ref(null) // null, 'CALC', 'CLOCK', 'DICE'
-  const gimmickData = ref(null)   // Data tambahan (misal jam string atau angka dadu)
+  const activeGimmick = ref(null)
+  const gimmickData = ref(null)
 
   const executeCommand = (commandString) => {
   if (!commandString) return;
@@ -31,7 +32,7 @@
 
   if (type !== 'BG') bgClass.value = 'bg-gray-50 text-gray-900';
 
-  // --- LOGIKA UTAMA SWITCH ---
+  // logic swich pada gimmick
   if (type === 'CALC') {
   activeGimmick.value = 'CALC';
 }
@@ -41,7 +42,7 @@
 }
   else if (type === 'DICE') {
   activeGimmick.value = 'DICE';
-  gimmickData.value = value; // Simpan angka dadu (misal "5")
+  gimmickData.value = value;
 }
   else if (type === 'BG') {
   bgClass.value = value;
@@ -78,18 +79,21 @@
   hasilTerjemahan.value = "Gagal memuat."
 }
 }
+  // bg-red-200 bg-green-200 bg-blue-200 bg-yellow-200 bg-gray-900 text-white
 </script>
 
 <template>
   <div :class="bgClass" class="min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 font-sans transition-colors duration-500">
-
-    <div class="text-center mb-10">
-      <h1 class="text-4xl font-extrabold text-emerald-600 tracking-tight">QomuS</h1>
-      <p class="mt-2 text-lg text-gray-500">Kamus Interaktif & Fitur Rahasia</p>
+    <div class="items-center mb-5 mt-15">
+      <img :src="Icon" alt="Logo Asset" class="w-32 h-32" />
+    </div>
+    <div class="text-center mb-10 mt-5">
+      <h1 class="text-5xl font-extrabold text-emerald-600 tracking-wider">QomuS</h1>
+      <p class="mt-2 text-lg text-gray-500 font-alhambra">Kamus Interaktif & Fitur Rahasia</p>
     </div>
 
     <div class="w-full max-w-md flex gap-2">
-      <input v-model="inputKata" placeholder="Ketik: 'jam', 'dadu', 'kalkulator'" @keyup.enter="cariTerjemahan"
+      <input v-model="inputKata" placeholder="Ketik kata apa yang kamu ingin tahu?" @keyup.enter="cariTerjemahan"
              class="flex-1 shadow-sm focus:ring-emerald-500 focus:border-emerald-500 block w-full sm:text-sm border-gray-300 rounded-md p-3 border text-gray-900"/>
       <button @click="cariTerjemahan" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded shadow transition cursor-pointer">Cari</button>
     </div>

@@ -2,8 +2,8 @@ package com.example.QomuS;
 
 public class QomusRBnode {
     String key;
-    Object value;   // Arti
-    Object gimmick; // String atau Function (Supplier)
+    Object value;
+    Object gimmick;
 
     QomusRBnode parent;
     QomusRBnode left;
