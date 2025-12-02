@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue'
 
-// --- LOGIKA KALKULATOR (Dipindah dari App.vue) ---
 const calcDisplay = ref('')
 
+// --- HELPER: KONVERSI ANGKA ARAB <-> LATIN ---
 const toArabic = (num) => {
   const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩']
   return num.toString().replace(/\d/g, d => arabicDigits[d])
@@ -18,6 +18,7 @@ const toLatin = (str) => {
   return res
 }
 
+// --- LOGIKA TOMBOL ---
 const appendCalc = (char) => {
   calcDisplay.value += char
 }
@@ -26,13 +27,28 @@ const clearCalc = () => {
   calcDisplay.value = ''
 }
 
-const calculateResult = () => {
+// --- LOGIKA HITUNG (PANGGIL BACKEND) ---
+const calculateResult = async () => {
   try {
-    let expression = toLatin(calcDisplay.value)
-    // eslint-disable-next-line no-eval
-    let result = eval(expression)
-    calcDisplay.value = toArabic(result)
+    // 1. Ubah ke Latin (misal "١+١" jadi "1+1")
+    let expressionLatin = toLatin(calcDisplay.value)
+
+    // 2. Encode agar aman di URL (tanda + tidak hilang)
+    let encodedExpression = encodeURIComponent(expressionLatin)
+
+    // 3. Minta Backend Menghitung
+    const response = await fetch(`/hitung?ekspresi=${encodedExpression}`)
+    const resultLatin = await response.text()
+
+    // 4. Tampilkan Hasil
+    if (resultLatin.startsWith("Error")) {
+      calcDisplay.value = "Error"
+    } else {
+      calcDisplay.value = toArabic(resultLatin)
+    }
+
   } catch (e) {
+    console.error(e)
     calcDisplay.value = 'Error'
   }
 }
@@ -40,7 +56,6 @@ const calculateResult = () => {
 
 <template>
   <div class="mt-8 bg-gray-900 p-6 rounded-2xl shadow-2xl max-w-sm w-full mx-auto border border-gray-700">
-
     <div class="bg-gray-100 text-gray-800 text-4xl text-right p-4 rounded-lg mb-4 font-mono h-20 flex items-center justify-end overflow-hidden">
       {{ calcDisplay || '٠' }}
     </div>
@@ -72,12 +87,11 @@ const calculateResult = () => {
 </template>
 
 <style scoped>
-/* PENTING: Beritahu komponen ini untuk melihat referensi Tailwind dari file global */
+/* Wajib ada agar Tailwind terbaca di komponen ini */
 @reference "../style.css";
 
-/* Custom Utility Class agar coding HTML tidak terlalu panjang */
 .btn {
-  @apply py-4 rounded-lg text-xl transition duration-200 active:scale-95;
+  @apply h-14 w-full flex items-center justify-center rounded-lg text-xl transition duration-200 active:scale-95 cursor-pointer;
 }
 .btn-num {
   @apply bg-gray-700 text-white hover:bg-gray-600;

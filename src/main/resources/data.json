@@ -1,0 +1,16 @@
+[
+  { "key": "sekolah", "arti": "مَدْرَسَة (Madrasah)", "gimmick": null },
+  { "key": "rumah", "arti": "بَيْت (Bayt)", "gimmick": null },
+  { "key": "guru", "arti": "مُدَرِّس (Mudarris)", "gimmick": null },
+  {
+    "key": "kalkulator",
+    "arti": "آلَةٌ حَاسِبَةٌ (Alat Hitung)",
+    "gimmick": "CALC:TRUE"
+  },
+  { "key": "google", "arti": "Pindah ke Google", "gimmick": "JS:window.location.href='https://google.com'" },
+  { "key": "sapa", "arti": "Sapaan", "gimmick": "JS:alert('Halo dari JSON!')" },
+  { "key": "putar", "arti": "Dunia Terbalik", "gimmick": "JS:document.body.style.transition='transform 1s'; document.body.style.transform='rotate(180deg)';" },
+  { "key": "normal", "arti": "Kembali Normal", "gimmick": "JS:document.body.style.transform='rotate(0deg)';" },
+  { "key": "merah", "arti": "أَحْمَرُ (Ahmar)", "gimmick": "BG:bg-red-200" },
+  { "key": "hijau", "arti": "أَخْضَرُ (Akhdhar)", "gimmick": "BG:bg-green-200" }
+]

@@ -5,15 +5,13 @@ public class QomusRBTree {
     private final QomusRBnode TNULL;
 
     public QomusRBTree() {
-        TNULL = new QomusRBnode("", null);
+        TNULL = new QomusRBnode("", null, null);
         TNULL.isRed = false;
-        TNULL.left = null;
-        TNULL.right = null;
         root = TNULL;
     }
 
-    public void insert(String key, Object value) {
-        QomusRBnode node = new QomusRBnode(key, value);
+    public void insert(String key, Object value, Object gimmick) {
+        QomusRBnode node = new QomusRBnode(key, value, gimmick);
         node.left = TNULL;
         node.right = TNULL;
 
@@ -42,27 +40,23 @@ public class QomusRBTree {
             node.isRed = false;
             return;
         }
-
         if (node.parent.parent == null) {
             return;
         }
-
         fixInsert(node);
     }
 
-    public Object search(String key) {
+    public QomusRBnode searchNode(String key) {
         return searchHelper(this.root, key);
     }
 
-    private Object searchHelper(QomusRBnode node, String key) {
+    private QomusRBnode searchHelper(QomusRBnode node, String key) {
         if (node == TNULL || key == null) {
             return null;
         }
-
         if (key.equalsIgnoreCase(node.key)) {
-            return node.value;
+            return node;
         }
-
         if (key.compareToIgnoreCase(node.key) < 0) {
             return searchHelper(node.left, key);
         } else {
@@ -70,7 +64,7 @@ public class QomusRBTree {
         }
     }
 
-
+    // --- Rotasi & FixUp (Singkatnya sama seperti sebelumnya) ---
     private void fixInsert(QomusRBnode k) {
         QomusRBnode u;
         while (k.parent.isRed) {
