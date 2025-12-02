@@ -5,6 +5,8 @@ import CalculatorArab from './components/kalkulator.vue'
 const inputKata = ref('')
 const hasilTerjemahan = ref('')
 const showCalculator = ref(false)
+const showLove = ref(false)
+const showHorror = ref(false)
 
 const cariTerjemahan = async () => {
   try {
@@ -12,6 +14,18 @@ const cariTerjemahan = async () => {
     const data = await respon.text()
 
 
+     if (data.includes('#GIMMICK_LOVE')) {
+      hasilTerjemahan.value = data.split('#')[0]
+      showLove.value = true
+      setTimeout(() => showLove.value = false, 2000) 
+      return
+    }
+    if (data.includes('#GIMMICK_HORROR')) {
+      hasilTerjemahan.value = data.split('#')[0]
+      showHorror.value = true
+      setTimeout(() => showHorror.value = false, 1800) 
+      return
+    }
     if (data.includes('#GIMMICK_CALC')) {
       const parts = data.split('#')
       hasilTerjemahan.value = parts[0]
@@ -59,6 +73,12 @@ const cariTerjemahan = async () => {
     <div v-if="showCalculator" class="w-full flex justify-center mt-6 fade-in">
       <CalculatorArab />
     </div>
+    <div v-if="showLove" class="fixed inset-0 flex items-start justify-center z-50 pointer-event-none">
+      <img src="/images/love.gif" class="w-[250px] h-auto love-drop"/>
+    </div>
+    <div v-if="showHorror" class="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
+      <img src="/images/jumpscare.gif" class="w-[500px] h-auto animate-pulse">
+    </div>
 
   </div>
 </template>
@@ -74,5 +94,14 @@ const cariTerjemahan = async () => {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+.love-drop {
+  animation: loveFall 2s ease-out forwards;
+}
+@keyframes loveFall {
+  0% { transform:translateY(-300px) scale(0.6); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(300px) scale(1); opacity: 0; }
 }
 </style>
