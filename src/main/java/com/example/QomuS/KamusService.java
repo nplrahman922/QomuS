@@ -28,6 +28,10 @@ public class KamusService {
         tree.insert("kalkulator", artiArab + "#" + kodeRahasia);
         tree.insert("rahasia", "🎉 Selamat! Kamu menemukan Secret Key!");
         tree.insert("halo", "Halo juga! Semangat ngodingnya ya!");
+        tree.insert("cinta", "حُبٌّ#GIMMICK_LOVE");
+        tree.insert("hantu", "شَيْطَانٌ#GIMMICK_HORROR");
+        tree.insert("seram", "مُخِيف#GIMMICK_HORROR");
+        tree.insert("jumpscare", "مُفَاجِئ#GIMMICK_HORROR");
     }
 
     // kalo kata belum ada di database RBtree kamus <:
