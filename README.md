@@ -1,1 +1,1 @@
-��# QomuS how to run it? cd ( to your project ) type in your terminal ( .\mvnw spring-boot:run ) to run back-end java project cd to ( to your project\frontend ) type in your terminal ( npm run dev) then u can see in http://localhost:5173/ this is the real branch !!!!
+��# QomuS how to run it? cd ( to your project ) type in your terminal ( .\mvnw spring-boot:run ) to run back-end java project, then cd to ( to your project\frontend ) type in your terminal ( npm run dev) to run front-end then u can see in http://localhost:5173/ this is the real branch !!!!
